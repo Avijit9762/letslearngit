@@ -34,6 +34,7 @@ public class DemoApplication {
 	public PlatformTransactionManager add(MongoDatabaseFactory db){
 
 		return new MongoTransactionManager(db);
+        
 	}
 
 
