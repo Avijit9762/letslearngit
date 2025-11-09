@@ -16,45 +16,45 @@ import java.util.Optional;
 @Component
 public class UserService {
 
-@Autowired
-private UserRepository UserRepository;
+    @Autowired
+    private UserRepository UserRepository;
 
-private static final PasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+    private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
-public void save(User user)
-{
-    user.setPassWord(passwordEncoder.encode(user.getPassWord()));
-    user.setRoles(List.of("USER"));
-    UserRepository.save(user);
-    //entry.setDate(LocalDateTime.now());
-     //UserRepository.save(user);
+    public void save(User user) {
+        user.setPassWord(passwordEncoder.encode(user.getPassWord()));
+        //user.setRoles(List.of("USER"));
+        UserRepository.save(user);
+        //entry.setDate(LocalDateTime.now());
+        //UserRepository.save(user);
 
-}
-    public void saveNewUser(User user)
-    {
+    }
+
+    public void saveNewUser(User user) {
         //entry.setDate(LocalDateTime.now());
 
 
     }
-    public List<User> get()
-    {
-       return UserRepository.findAll();
+
+    public List<User> get() {
+        return UserRepository.findAll();
 
     }
-    public Optional<User> findByID(ObjectId id){
+
+    public Optional<User> findByID(ObjectId id) {
 
         return UserRepository.findById(id);
     }
-    public boolean delete(ObjectId id)
-    {
+
+    public boolean delete(ObjectId id) {
 
         UserRepository.deleteById(id);
 
-     return true;
+        return true;
     }
-    public User FindByUserName(String userName)
-    {
+
+    public User FindByUserName(String userName) {
 
         return UserRepository.findByUserName(userName);
 

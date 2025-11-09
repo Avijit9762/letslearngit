@@ -16,36 +16,39 @@ import java.util.Map;
 @RestController
 @RequestMapping("/_journal")
 public class JournalController {
-    private static final Logger logger= LoggerFactory.getLogger(JournalController.class);
-    private Map<ObjectId,JournalEntry> journalEntryMap = new HashMap<ObjectId,JournalEntry>();
+    private static final Logger logger = LoggerFactory.getLogger(JournalController.class);
+    private Map<ObjectId, JournalEntry> journalEntryMap = new HashMap<ObjectId, JournalEntry>();
 
     @GetMapping("/getAllJournals")
-    public List<JournalEntry> getAll(){
+    public List<JournalEntry> getAll() {
 
-        return new  ArrayList<>(journalEntryMap.values());
+        return new ArrayList<>(journalEntryMap.values());
     }
 
     @PostMapping("/createJournals")
-    public boolean CreateJournal(@RequestBody JournalEntry createEntry){
-        journalEntryMap.put(createEntry.getObjectId(),createEntry);
+    public boolean CreateJournal(@RequestBody JournalEntry createEntry) {
+        journalEntryMap.put(createEntry.getId(), createEntry);
         return true;
 
     }
+
     @DeleteMapping("/deleteJournal/{myId}")
-    public boolean updateJournal(@PathVariable ObjectId myId){
+    public boolean updateJournal(@PathVariable ObjectId myId) {
         journalEntryMap.remove(myId);
 
         return true;
     }
+
     @GetMapping("/id/{myId}")
-    public  JournalEntry getJournal(@PathVariable ObjectId myId){
-        return  journalEntryMap.get(myId);
+    public JournalEntry getJournal(@PathVariable ObjectId myId) {
+        return journalEntryMap.get(myId);
 
 
     }
+
     @PutMapping("/id/{myId}")
-    public  JournalEntry update(@PathVariable ObjectId myId,@RequestBody JournalEntry entry){
-        return  journalEntryMap.put(myId,entry);
+    public JournalEntry update(@PathVariable ObjectId myId, @RequestBody JournalEntry entry) {
+        return journalEntryMap.put(myId, entry);
 
 
     }

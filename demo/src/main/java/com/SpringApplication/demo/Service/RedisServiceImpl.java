@@ -5,12 +5,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RedisServiceImple {
+public class RedisServiceImpl {
 
     @Autowired
     private RedisTemplate redisTemplate;
-
-
 
 
     public void saveData(String key, String value) {

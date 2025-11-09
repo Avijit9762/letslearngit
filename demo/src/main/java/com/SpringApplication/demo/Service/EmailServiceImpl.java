@@ -21,22 +21,22 @@ public class EmailServiceImpl {
     @Autowired
     public JavaMailSender javaMailSender;
     @Value("${spring.mail.username}")
-    private  String fromAddress;
+    private String fromAddress;
 
-    private static Logger log= LoggerFactory.getLogger(EmailServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(EmailServiceImpl.class);
 
-    public void SendMail(String body ,String to , String sub,File
-                         Fl){
-    try {
-    log.info("inside SendMail  method");
-    MimeMessage message = javaMailSender.createMimeMessage();
-    MimeMessageHelper helper = new MimeMessageHelper(message, true); // 'true' = multipart
-     String definedBody="Hi there Please find the PDF";
-    helper.setTo(to);
-    helper.setFrom(fromAddress);
-    helper.setSubject(sub);
-    helper.setText(definedBody);
-        helper.addAttachment("Weather.json" ,Fl);
+    public void SendMail(String body, String to, String sub, File
+            Fl) {
+        try {
+            log.info("inside SendMail  method");
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true); // 'true' = multipart
+            String definedBody = "Hi there Please find the PDF";
+            helper.setTo(to);
+            helper.setFrom(fromAddress);
+            helper.setSubject(sub);
+            helper.setText(definedBody);
+            helper.addAttachment("Weather.json", Fl);
     /*FileSystemResource file = new FileSystemResource(new File("C:\\Users\\aviji\\OneDrive\\Desktop\\CV\\Avijit_Hait.pdf"));
     helper.addAttachment(file.getFilename(), file);*/
 //    SimpleMailMessage mail = new SimpleMailMessage();
@@ -44,15 +44,39 @@ public class EmailServiceImpl {
 //    mail.setSubject(sub);
 //    mail.setText(body);
 
-    javaMailSender.send(message);
-}catch(Exception Ex){
-        log.error("inside SendMail  method{}", Ex.getMessage());
+            javaMailSender.send(message);
+        } catch (Exception Ex) {
+            log.error("inside SendMail  method{}", Ex.getMessage());
 
-}
+        }
 
 
     }
+    public void SendEmail(String body, String to, String sub) {
+        try {
+            log.info("inside SendMail  method");
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true); // 'true' = multipart
+            String definedBody = "Hi there Please find the PDF";
+            helper.setTo(to);
+            helper.setFrom(fromAddress);
+            helper.setSubject(sub);
+            helper.setText(definedBody);
+            //helper.addAttachment("Weather.json", Fl);
+    /*FileSystemResource file = new FileSystemResource(new File("C:\\Users\\aviji\\OneDrive\\Desktop\\CV\\Avijit_Hait.pdf"));
+    helper.addAttachment(file.getFilename(), file);*/
+//    SimpleMailMessage mail = new SimpleMailMessage();
+//    mail.setTo(to);
+//    mail.setSubject(sub);
+//    mail.setText(body);
+
+            javaMailSender.send(message);
+        } catch (Exception Ex) {
+            log.error("inside SendMail  method{}", Ex.getMessage());
+
+        }
 
 
+    }
 
 }

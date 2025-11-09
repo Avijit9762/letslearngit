@@ -15,21 +15,26 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SpringSecurity  {
     @Autowired
 private UserDetailServiceImpl userDetailService;
+    @Autowired
+    private JwtAuthFilter jwtAuthFilter;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/journal/**", "/healthCheck/**","/getWeather/**","/users/**").permitAll()
+                        .requestMatchers("/journal/**", "/healthCheck/**","/getWeather/**","/users/**","/login/**").permitAll()
                         .anyRequest().authenticated()
-                )
-                .formLogin(form -> form
+                ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                /*.formLogin(form -> form
                         .loginPage("/login")
                         .permitAll()
                 )
@@ -40,7 +45,7 @@ private UserDetailServiceImpl userDetailService;
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .permitAll()
-                );
+                );*/
         http.sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         )
